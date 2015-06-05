@@ -70,15 +70,22 @@
   ([a] a)
   ([a b] (+ a b)))
 
+(defn element-wise [f]
+  (fn
+    ([a] f)
+    ([a b] (if (every? #(= (type %) clojure.lang.PersistentVector) [a b])
+             (vec (map f a b))
+             (f a b)))))
+
 (defn apl-fn [sym]
   (condp = sym
     '≥ geq
     '= eq
-    '∧ logical-conjunction
-    '∨ logical-disjunction
+    '∧ (element-wise logical-conjunction)
+    '∨ (element-wise logical-disjunction)
     '∼ logical-not
     '⋆ power
     '⍟ logarithm
     '∣ magnitude
     '÷ divide
-    '+ add))
+    '+ (element-wise add)))
