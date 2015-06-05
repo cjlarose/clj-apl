@@ -59,14 +59,14 @@
 
 (def magnitude math/abs)
 
-(def signum-multiply
-  (letfn [(signum [x]
-            (cond (> x 0) 1
-                  (< x 0) -1
-                  :else 0))]
-    (fn
-      ([x] (signum x))
-      ([a b] (* a b)))))
+(defn- signum [x]
+  (cond (> x 0) 1
+        (< x 0) -1
+        :else 0))
+
+(defn signum-multiply
+  ([x] (signum x))
+  ([a b] (* a b)))
 
 (defn divide
   ([a] (/ 1 a))
@@ -87,7 +87,10 @@
 (def dimension count)
 
 (defn vec-take [limit xs]
-  (vec (take limit xs)))
+  (case (signum limit)
+    -1 (vec (take-last (- limit) xs))
+    1  (vec (take limit xs))
+    0  []))
 
 ;; generating vectors
 (defn iota [n]
