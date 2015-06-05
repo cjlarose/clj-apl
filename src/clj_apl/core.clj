@@ -1,7 +1,6 @@
 (ns clj-apl.core
   (:require [clojure.math.numeric-tower :as math]))
 
-; (def ceil math/ceil)
 ;
 ; (def floor math/floor)
 ;
@@ -68,9 +67,17 @@
   ([a] a)
   ([a b] (+ a b)))
 
+(defn ceil
+  ([a] (math/ceil a))
+  ([a b] (Math/max a b)))
+
 ;; generating vectors
 (defn iota [n]
   (vec (range 1 (inc n))))
+
+;; operators
+(defn reduction [f xs]
+  (reduce f xs))
 
 ;; decorators
 (defn to-vector [x]
@@ -95,4 +102,6 @@
     '∣ magnitude
     '÷ divide
     '+ (element-wise add)
-    '⍳ iota))
+    '⍳ iota
+    '/ reduction
+    '⌈ ceil))
