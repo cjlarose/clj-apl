@@ -84,6 +84,8 @@
 (defn index [xs idx]
   (nth xs (dec idx)))
 
+(def dimension count)
+
 ;; generating vectors
 (defn iota [n]
   (vec (range 1 (inc n))))
@@ -118,4 +120,5 @@
     '+ (element-wise add)
     '⍳ iota
     '/ reduction
-    '⌈ ceil-max))
+    '⌈ ceil-max
+    '⍴ dimension))
