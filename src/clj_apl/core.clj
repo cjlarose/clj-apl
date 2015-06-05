@@ -84,7 +84,12 @@
 (defn index [xs idx]
   (nth xs (dec idx)))
 
-(def dimension count)
+(defn dimension
+  ([a] count)
+  ([new-dimension xs]
+   (if (= (count new-dimension) 2)
+     (let [[n m] new-dimension]
+       (vec (map vec (partition m xs)))))))
 
 (defn vec-take [limit xs]
   (case (signum limit)
