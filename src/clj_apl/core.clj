@@ -82,7 +82,9 @@
 
 ;; vector functions
 (defn index [xs idx]
-  (nth xs (dec idx)))
+  (if (sequential? idx)
+    (get-in xs (map dec idx))
+    (nth xs (dec idx))))
 
 (defn dimension
   ([a] count)
