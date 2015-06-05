@@ -86,6 +86,9 @@
 
 (def dimension count)
 
+(defn vec-take [limit xs]
+  (vec (take limit xs)))
+
 ;; generating vectors
 (defn iota [n]
   (vec (range 1 (inc n))))
@@ -121,4 +124,5 @@
     '⍳ iota
     '/ reduction
     '⌈ ceil-max
-    '⍴ dimension))
+    '⍴ dimension
+    '↑ vec-take))
