@@ -119,7 +119,7 @@
   (fn
     ([a] f)
     ([a b] (if (some vector? [a b])
-             (vec (map f (to-vector a) (to-vector b)))
+             (vec (map (element-wise f) (to-vector a) (to-vector b)))
              (f a b)))))
 
 (defn apl-fn [sym]
