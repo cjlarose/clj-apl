@@ -89,7 +89,7 @@
   ([new-dimension xs]
    (if (= (count new-dimension) 2)
      (let [[n m] new-dimension]
-       (vec (map vec (partition m xs)))))))
+       (vec (take n (map vec (partition m (cycle xs)))))))))
 
 (defn vec-take [limit xs]
   (case (signum limit)
