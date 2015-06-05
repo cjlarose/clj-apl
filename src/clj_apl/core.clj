@@ -59,6 +59,15 @@
 
 (def magnitude math/abs)
 
+(def signum-multiply
+  (letfn [(signum [x]
+            (cond (> x 0) 1
+                  (< x 0) -1
+                  :else 0))]
+    (fn
+      ([x] (signum x))
+      ([a b] (* a b)))))
+
 (defn divide
   ([a] (/ 1 a))
   ([a b] (/ a b)))
@@ -67,9 +76,13 @@
   ([a] a)
   ([a b] (+ a b)))
 
-(defn ceil
+(defn ceil-max
   ([a] (math/ceil a))
   ([a b] (Math/max a b)))
+
+;; vector functions
+(defn index [xs idx]
+  (nth xs (dec idx)))
 
 ;; generating vectors
 (defn iota [n]
@@ -100,8 +113,9 @@
     '⋆ power
     '⍟ logarithm
     '∣ magnitude
+    '× (element-wise signum-multiply)
     '÷ divide
     '+ (element-wise add)
     '⍳ iota
     '/ reduction
-    '⌈ ceil))
+    '⌈ ceil-max))
