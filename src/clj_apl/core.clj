@@ -92,6 +92,12 @@
     1  (vec (take limit xs))
     0  []))
 
+(defn vec-drop [limit xs]
+  (case (signum limit)
+    -1 (vec (drop-last (- limit) xs))
+    1  (vec (drop limit xs))
+    0  xs))
+
 ;; generating vectors
 (defn iota [n]
   (vec (range 1 (inc n))))
@@ -128,4 +134,5 @@
     '/ reduction
     '⌈ ceil-max
     '⍴ dimension
-    '↑ vec-take))
+    '↑ vec-take
+    '↓ vec-drop))
