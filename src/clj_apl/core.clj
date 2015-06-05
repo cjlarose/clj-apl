@@ -5,8 +5,6 @@
 ;
 ; (def floor math/floor)
 ;
-; (defn iota [n]
-;   (range 1 n))
 ;
 ; (def negate -)
 ;
@@ -70,11 +68,19 @@
   ([a] a)
   ([a b] (+ a b)))
 
+;; generating vectors
+(defn iota [n]
+  (vec (range 1 (inc n))))
+
+;; decorators
+(defn to-vector [x]
+  (if (vector? x) x (repeat x)))
+
 (defn element-wise [f]
   (fn
     ([a] f)
-    ([a b] (if (every? #(= (type %) clojure.lang.PersistentVector) [a b])
-             (vec (map f a b))
+    ([a b] (if (some vector? [a b])
+             (vec (map f (to-vector a) (to-vector b)))
              (f a b)))))
 
 (defn apl-fn [sym]
@@ -88,4 +94,5 @@
     '⍟ logarithm
     '∣ magnitude
     '÷ divide
-    '+ (element-wise add)))
+    '+ (element-wise add)
+    '⍳ iota))
