@@ -27,7 +27,8 @@
 (defn logical-not [a]
   (cond
     (= a 0) 1
-    (= a 1) 0))
+    (= a 1) 0
+    :else (throw (ArithmeticException. "Domain error"))))
 
 ;; arithmetic functions
 (defn maximum [a b]
