@@ -39,4 +39,19 @@
     (is (= 234.4 (apl/+ 234.4)))
     (is (= -564.2 (apl/+ -564.2)))
     (is (= -1.2 (apl/+ -1.2)))
-    (is (= 0.0 (apl/+ 0.0)))))
+    (is (= 0.0 (apl/+ 0.0))))
+  (testing "magnitude"
+    (is (= 5.0 (apl/∣ 5.0)))
+    (is (= 45.3 (apl/∣ -45.3)))
+    (is (= 0.0 (apl/∣ 0.0))))
+  (testing "ceiling"
+    (is (= 5.0 (apl/⌈ 4.5)))
+    (is (= 5.0 (apl/⌈ 5.0)))
+    (is (= -5.0 (apl/⌈ -5.5)))
+    (is (= 0.0 (apl/⌈ 0.0))))
+  (testing "first n natural numbers"
+    (is (= [1 2 3 4 5] (apl/⍳ 5)))
+    (is (= [1 2] (apl/⍳ 2)))
+    (is (= [1] (apl/⍳ 1)))
+    (is (= [] (apl/⍳ 0)))
+    (is (thrown-with-msg? ArithmeticException #"Domain error" (apl/⍳ -1)))))
