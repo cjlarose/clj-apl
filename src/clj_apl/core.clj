@@ -1,7 +1,7 @@
 (ns clj-apl.core
-  (:require [clojure.math.numeric-tower :as math]))
+  (:require [clojure.core.matrix :refer [abs ceil exp log signum]]
+            [clojure.core.matrix.operators :as m]))
 
-;
 ; (def floor math/floor)
 ;
 ;
@@ -50,34 +50,29 @@
   (max a b))
 
 (defn power
-  ([a] (math/expt Math/E a))
-  ([a b] (math/expt a b)))
+  ([a] (exp Math/E a))
+  ([a b] (exp a b)))
 
 (defn logarithm
-  ([x] (Math/log x))
-  ([base x] (/ (Math/log x) (Math/log base))))
+  ([x] (log x))
+  ([base x] (m// (log x) (log base))))
 
-(def magnitude math/abs)
-
-(defn- signum [x]
-  (cond (> x 0) 1
-        (< x 0) -1
-        :else 0))
+(def magnitude abs)
 
 (defn signum-multiply
   ([x] (signum x))
-  ([a b] (* a b)))
+  ([a b] (m/* a b)))
 
 (defn divide
-  ([a] (/ 1 a))
-  ([a b] (/ a b)))
+  ([a] (m// 1 a))
+  ([a b] (m// a b)))
 
 (defn add
   ([a] a)
-  ([a b] (+ a b)))
+  ([a b] (m/+ a b)))
 
 (defn ceil-max
-  ([a] (math/ceil a))
+  ([a] (ceil a))
   ([a b] (Math/max a b)))
 
 ;; vector functions
@@ -117,26 +112,19 @@
 (defn to-vector [x]
   (if (vector? x) x (repeat x)))
 
-(defn element-wise [f]
-  (fn
-    ([a] f)
-    ([a b] (if (some vector? [a b])
-             (vec (map (element-wise f) (to-vector a) (to-vector b)))
-             (f a b)))))
-
 (defn apl-fn [sym]
   (condp = sym
     '≥ geq
     '= eq
-    '∧ (element-wise logical-conjunction)
-    '∨ (element-wise logical-disjunction)
+    '∧ (partial emap logical-conjunction)
+    '∨ (partial emap logical-disjunction)
     '∼ logical-not
     '⋆ power
     '⍟ logarithm
     '∣ magnitude
-    '× (element-wise signum-multiply)
+    '× signum-multiply
     '÷ divide
-    '+ (element-wise add)
+    '+ add
     '⍳ iota
     '/ reduction
     '⌈ ceil-max
