@@ -16,14 +16,16 @@
     (and (clojure.core/= a 0) (clojure.core/= b 0)) 0
     (and (clojure.core/= a 0) (clojure.core/= b 1)) 0
     (and (clojure.core/= a 1) (clojure.core/= b 0)) 0
-    (and (clojure.core/= a 1) (clojure.core/= b 1)) 1))
+    (and (clojure.core/= a 1) (clojure.core/= b 1)) 1
+    :else (throw (ArithmeticException. "Domain error"))))
 
 (defn ∨ [a b]
   (cond
     (and (clojure.core/= a 0) (clojure.core/= b 0)) 0
     (and (clojure.core/= a 0) (clojure.core/= b 1)) 1
     (and (clojure.core/= a 1) (clojure.core/= b 0)) 1
-    (and (clojure.core/= a 1) (clojure.core/= b 1)) 1))
+    (and (clojure.core/= a 1) (clojure.core/= b 1)) 1
+    :else (throw (ArithmeticException. "Domain error"))))
 
 (defn ∼ [a]
   (cond
