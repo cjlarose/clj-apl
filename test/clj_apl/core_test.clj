@@ -55,3 +55,34 @@
     (is (= [1] (apl/⍳ 1)))
     (is (= [] (apl/⍳ 0)))
     (is (thrown-with-msg? ArithmeticException #"Domain error" (apl/⍳ -1)))))
+
+(deftest dyadic-fns
+  (testing "greater than or equal to"
+    (is (= 0 (apl/≥ 1.0 2.0)))
+    (is (= 1 (apl/≥ 2.0 1.0)))
+    (is (= 1 (apl/≥ 2.0 -1.0)))
+    (is (= 1 (apl/≥ 2.0 2.0))))
+  (testing "equality"
+    (is (= 1 (apl/= 1.0 1.0)))
+    (is (= 0 (apl/= 1.0 2.0)))
+    (is (= 0 (apl/= 1.0 -1.0))))
+  (testing "logical and"
+    (is (= 0 (apl/∧ 0 0)))
+    (is (= 0 (apl/∧ 0 1)))
+    (is (= 0 (apl/∧ 1 0)))
+    (is (= 1 (apl/∧ 1 1)))
+    (is (thrown-with-msg? ArithmeticException #"Domain error" (apl/∧ 1 -1)))
+    (is (thrown-with-msg? ArithmeticException #"Domain error" (apl/∧ -1 0))))
+  (testing "logical or"
+    (is (= 0 (apl/∨ 0 0)))
+    (is (= 1 (apl/∨ 0 1)))
+    (is (= 1 (apl/∨ 1 0)))
+    (is (= 1 (apl/∨ 1 1)))
+    (is (thrown-with-msg? ArithmeticException #"Domain error" (apl/∨ 1 -1)))
+    (is (thrown-with-msg? ArithmeticException #"Domain error" (apl/∨ -5 0))))
+  (testing "exponentiation"
+    (is (float= 4.0 (apl/⋆ 2.0 2.0)))
+    (is (float= 8.0 (apl/⋆ 2.0 3.0)))
+    (is (float= 9.0 (apl/⋆ 3.0 2.0)))
+    (is (float= 3.0 (apl/⋆ 3.0 1.0)))
+    (is (float= 0.125 (apl/⋆ 2.0 -3.0)))))
