@@ -27,4 +27,10 @@
   (testing "natural log"
     (is (= 0.0 (logarithm 1.0)))
     (is (float= 2.0149030205422647 (logarithm 7.5)))
-    (is (= 1.0 (logarithm Math/E)))))
+    (is (= 1.0 (logarithm Math/E))))
+  (testing "sign function"
+    (is (= 1.0 (signum-multiply 1.0)))
+    (is (= 1.0 (signum-multiply 234.4)))
+    (is (= -1.0 (signum-multiply -564.2)))
+    (is (= -1.0 (signum-multiply -1.2)))
+    (is (= 0.0 (signum-multiply 0)))))
