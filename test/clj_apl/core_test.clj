@@ -85,4 +85,24 @@
     (is (float= 8.0 (apl/⋆ 2.0 3.0)))
     (is (float= 9.0 (apl/⋆ 3.0 2.0)))
     (is (float= 3.0 (apl/⋆ 3.0 1.0)))
-    (is (float= 0.125 (apl/⋆ 2.0 -3.0)))))
+    (is (float= 0.125 (apl/⋆ 2.0 -3.0))))
+  (testing "addition"
+    (is (float= 4.0 (apl/+ 2.0 2.0)))
+    (is (float= 5.0 (apl/+ 2.0 3.0)))
+    (is (float= 10.5 (apl/+ 11.0 -0.5)))
+    (is (float= 11.0 (apl/+ 11.0 0.0))))
+  (testing "multiplication"
+    (is (float= 4.0 (apl/× 2.0 2.0)))
+    (is (float= 6.0 (apl/× 2.0 3.0)))
+    (is (float= -5.5 (apl/× 11.0 -0.5)))
+    (is (float= 0.0 (apl/× 11.0 0.0))))
+  (testing "division"
+    (is (float= 2.0 (apl/÷ 4.0 2.0)))
+    (is (float= 2.0 (apl/÷ 6.0 3.0)))
+    (is (float= 11.0 (apl/÷ -5.5 -0.5)))
+    (is (float= 11.0 (apl/÷ 11.0 1.0))))
+  (testing "maximum"
+    (is (= 2.0 (apl/⌈ 2.0 1.0)))
+    (is (= 2.0 (apl/⌈ 2.0 2.0)))
+    (is (= 2.0 (apl/⌈ 2.0 -3.0)))
+    (is (= -3.0 (apl/⌈ -7.0 -3.0)))))
