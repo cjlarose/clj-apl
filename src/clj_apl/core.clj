@@ -1,22 +1,6 @@
 (ns clj-apl.core
-  (:require [clojure.core.matrix :refer [abs ceil exp log signum]]
+  (:require [clojure.core.matrix :refer [abs ceil exp log signum emap]]
             [clojure.core.matrix.operators :as m]))
-
-; (def floor math/floor)
-;
-;
-; (def negate -)
-;
-; (def id identity)
-;
-; (defn sign [x]
-;   (cond (> x 0) 1
-;         (< x 0) -1
-;         :else 0))
-;
-; (def reciprocal (partial / 1))
-;
-; (def pi-times (partial * Math/PI))
 
 ;; comparison
 (defn geq [a b]
