@@ -23,4 +23,8 @@
     (is (= 1.0 (power 0.0)))
     (is (= Math/E (power 1.0)))
     (is (float= 0.36787944117144233 (power -1.0)))
-    (is (float= 735.0951892419727 (power 6.6)))))
+    (is (float= 735.0951892419727 (power 6.6))))
+  (testing "natural log"
+    (is (= 0.0 (logarithm 1.0)))
+    (is (float= 2.0149030205422647 (logarithm 7.5)))
+    (is (= 1.0 (logarithm Math/E)))))
