@@ -73,15 +73,15 @@
 
 (defn ↑ [limit xs]
   (case (signum limit)
-    -1 (vec (take-last (- limit) xs))
-    1  (vec (take limit xs))
-    0  []))
+    -1.0 (vec (take-last (- limit) xs))
+    1.0  (vec (take limit xs))
+    0.0  []))
 
 (defn ↓ [limit xs]
   (case (signum limit)
-    -1 (vec (drop-last (- limit) xs))
-    1  (vec (drop limit xs))
-    0  xs))
+    -1.0 (vec (drop-last (- limit) xs))
+    1.0  (vec (drop limit xs))
+    0.0  xs))
 
 ;; generating vectors
 (defn ⍳ [n]
