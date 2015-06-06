@@ -85,7 +85,9 @@
 
 ;; generating vectors
 (defn ⍳ [n]
-  (vec (range 1 (inc n))))
+  (if (>= n 0)
+    (vec (range 1 (inc n)))
+    (throw (ArithmeticException. "Domain error"))))
 
 ;; operators
 (defn / [f xs]
