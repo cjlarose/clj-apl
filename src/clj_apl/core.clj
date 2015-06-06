@@ -1,5 +1,5 @@
 (ns clj-apl.core
-  (:require [clojure.core.matrix :refer [abs ceil exp log signum emap]]
+  (:require [clojure.core.matrix :refer [abs ceil exp log signum emap pow]]
             [clojure.core.matrix.operators :as m]))
 
 ;; comparison
@@ -35,8 +35,8 @@
   (max a b))
 
 (defn power
-  ([a] (exp Math/E a))
-  ([a b] (exp a b)))
+  ([a] (exp a))
+  ([a b] (pow a b)))
 
 (defn logarithm
   ([x] (log x))
