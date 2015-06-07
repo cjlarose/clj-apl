@@ -71,16 +71,14 @@
 
 (defn ⍴
   ([a] (if (scalar? a) [] (shape a)))
-  ([dimensions xs]
-    ; TODO: Case for empty new-dimension vector
-    (if (clojure.core/= (count dimensions) 1)
-      (let [elements (if (clojure.core/= (ecount xs) 0)
-                       (repeat 0)
-                       (cycle (eseq xs)))]
-        (vec (take (first dimensions) elements))))))
-    ; (if (clojure.core/= (count new-dimension) 2)
-    ;   (let [[n m] new-dimension]
-    ;     (vec (take n (map vec (partition m (cycle xs)))))))))
+  ([[d & ds] xs]
+    ; TODO: Case for empty dimensions vector
+    (let [elements (if (clojure.core/= (ecount xs) 0)
+                     (repeat 0)
+                     (cycle (eseq xs)))]
+      (if (nil? ds)
+        (vec (take d elements))
+        (vec (take d (partition (first ds) elements)))))))
 
 (defn ↑ [limit xs]
   ; TODO: Rank error if input is more than one dimension
