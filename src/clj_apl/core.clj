@@ -9,11 +9,8 @@
   (if x 1 0))
 
 ;; comparison functions
-(defn = [a b]
-  (emap (comp bool->int clojure.core/=) a b))
-
-(defn ≥ [a b]
-  (emap (comp bool->int >=) a b))
+(def = (partial emap (comp bool->int clojure.core/=)))
+(def ≥ (partial emap (comp bool->int >=)))
 
 ;; logical functions
 (defn ∧ [a b]
