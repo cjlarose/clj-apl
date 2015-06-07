@@ -1,6 +1,6 @@
 (ns clj-apl.core
   (:refer-clojure :exclude [= + /])
-  (:require [clojure.core.matrix :refer [abs ceil exp log signum emap pow]]
+  (:require [clojure.core.matrix :refer [abs ceil exp log signum emap pow scalar? shape]]
             [clojure.core.matrix.operators :as m]))
 
 ;; comparison
@@ -67,7 +67,7 @@
     (nth xs (dec idx))))
 
 (defn ⍴
-  ([a] count)
+  ([a] (if (scalar? a) [] (shape a)))
   ([new-dimension xs]
    (if (clojure.core/= (count new-dimension) 2)
      (let [[n m] new-dimension]
