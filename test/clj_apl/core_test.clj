@@ -54,7 +54,16 @@
     (is (= [1 2] (apl/⍳ 2)))
     (is (= [1] (apl/⍳ 1)))
     (is (= [] (apl/⍳ 0)))
-    (is (thrown-with-msg? ArithmeticException #"Domain error" (apl/⍳ -1)))))
+    (is (thrown-with-msg? ArithmeticException #"Domain error" (apl/⍳ -1))))
+  (testing "shape"
+    (is (= [] (apl/⍴ 5)))
+    (is (= [1] (apl/⍴ [1])))
+    (is (= [4] (apl/⍴ [1 2 3 4])))
+    (is (= [3 4] (apl/⍴ [[1 2 3 4] [4 5 6 7] [7 8 9 10]])))
+    (is (= [4 3 2] (apl/⍴ [[[1 1] [2 2] [3 3]]
+                           [[1 1] [2 2] [3 3]]
+                           [[1 1] [2 2] [3 3]]
+                           [[1 1] [2 2] [3 3]]])))))
 
 (deftest dyadic-fns
   (testing "greater than or equal to"
