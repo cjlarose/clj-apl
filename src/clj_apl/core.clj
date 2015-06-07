@@ -5,13 +5,13 @@
             [clojure.core.matrix.operators :as m]))
 
 ;; comparison
+(defn = [a b]
+  (if (clojure.core/= a b) 1 0))
+
 (defn ≥ [a b]
   (if (>= a b) 1 0))
 
 ;; logical functions
-(defn = [a b]
-  (if (clojure.core/= a b) 1 0))
-
 (defn ∧ [a b]
   (cond
     (and (clojure.core/= a 0) (clojure.core/= b 0)) 0
