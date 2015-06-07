@@ -57,7 +57,7 @@
 
 (defn ⌈
   ([a] (ceil a))
-  ([a b] (Math/max a b)))
+  ([a b] (emap (fn [x y] (Math/max x y)) a b)))
 
 ;; vector functions
 (defn index [xs idx]
