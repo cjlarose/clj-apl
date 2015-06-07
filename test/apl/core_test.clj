@@ -140,6 +140,17 @@
   (is (= [1 0 0] (apl/> 2.0 [1.9 2.0 2.1])))
   (is (= [1 0 0] (apl/> [-2.0 0.0 2.0] [-2.1 0.0 2.1]))))
 
+(deftest logical-or
+  (is (= 0 (apl/∨ 0 0)))
+  (is (= 1 (apl/∨ 0 1)))
+  (is (= 1 (apl/∨ 1 0)))
+  (is (= 1 (apl/∨ 1 1)))
+  (is (= [1 1] (apl/∨ 1 [0 1])))
+  (is (= [0 1] (apl/∨ 0 [0 1])))
+  (is (= [0 1 1 1] (apl/∨ [0 0 1 1] [0 1 0 1])))
+  (is (thrown-with-msg? ArithmeticException #"Domain error" (apl/∨ 1 -1)))
+  (is (thrown-with-msg? ArithmeticException #"Domain error" (apl/∨ -5 0))))
+
 (deftest logical-and
   (is (= 0 (apl/∧ 0 0)))
   (is (= 0 (apl/∧ 0 1)))
@@ -151,16 +162,27 @@
   (is (thrown-with-msg? ArithmeticException #"Domain error" (apl/∧ 1 -1)))
   (is (thrown-with-msg? ArithmeticException #"Domain error" (apl/∧ -1 0))))
 
-(deftest logical-or
-  (is (= 0 (apl/∨ 0 0)))
-  (is (= 1 (apl/∨ 0 1)))
-  (is (= 1 (apl/∨ 1 0)))
-  (is (= 1 (apl/∨ 1 1)))
-  (is (= [1 1] (apl/∨ 1 [0 1])))
-  (is (= [0 1] (apl/∨ 0 [0 1])))
-  (is (= [0 1 1 1] (apl/∨ [0 0 1 1] [0 1 0 1])))
-  (is (thrown-with-msg? ArithmeticException #"Domain error" (apl/∨ 1 -1)))
-  (is (thrown-with-msg? ArithmeticException #"Domain error" (apl/∨ -5 0))))
+(deftest logical-nor
+  (is (= 1 (apl/⍱ 0 0)))
+  (is (= 0 (apl/⍱ 0 1)))
+  (is (= 0 (apl/⍱ 1 0)))
+  (is (= 0 (apl/⍱ 1 1)))
+  (is (= [0 0] (apl/⍱ 1 [0 1])))
+  (is (= [1 0] (apl/⍱ 0 [0 1])))
+  (is (= [1 0 0 0] (apl/⍱ [0 0 1 1] [0 1 0 1])))
+  (is (thrown-with-msg? ArithmeticException #"Domain error" (apl/⍱ 1 -1)))
+  (is (thrown-with-msg? ArithmeticException #"Domain error" (apl/⍱ -5 0))))
+
+(deftest logical-nand
+  (is (= 1 (apl/⍲ 0 0)))
+  (is (= 1 (apl/⍲ 0 1)))
+  (is (= 1 (apl/⍲ 1 0)))
+  (is (= 0 (apl/⍲ 1 1)))
+  (is (= [1 0] (apl/⍲ 1 [0 1])))
+  (is (= [1 1] (apl/⍲ 0 [0 1])))
+  (is (= [1 1 1 0] (apl/⍲ [0 0 1 1] [0 1 0 1])))
+  (is (thrown-with-msg? ArithmeticException #"Domain error" (apl/⍲ 1 -1)))
+  (is (thrown-with-msg? ArithmeticException #"Domain error" (apl/⍲ -1 0))))
 
 (deftest exponentiation
   (is (float= 4.0 (apl/⋆ 2.0 2.0)))

@@ -21,15 +21,25 @@
     (apply f args)
     (throw (ArithmeticException. "Domain error"))))
 
+(defn ∨ [a b]
+  (letfn [(logical-or [x y]
+            (if (and (clojure.core/= x 0) (clojure.core/= y 0)) 0 1))]
+    (emap (partial with-bool-args logical-or) a b)))
+
 (defn ∧ [a b]
   (letfn [(logical-and [x y]
             (if (and (clojure.core/= x 1) (clojure.core/= y 1)) 1 0))]
     (emap (partial with-bool-args logical-and) a b)))
 
-(defn ∨ [a b]
-  (letfn [(logical-or [x y]
-            (if (and (clojure.core/= x 0) (clojure.core/= y 0)) 0 1))]
-    (emap (partial with-bool-args logical-or) a b)))
+(defn ⍱ [a b]
+  (letfn [(logical-nor [x y]
+            (if (and (clojure.core/= x 0) (clojure.core/= y 0)) 1 0))]
+    (emap (partial with-bool-args logical-nor) a b)))
+
+(defn ⍲ [a b]
+  (letfn [(logical-nand [x y]
+            (if (and (clojure.core/= x 1) (clojure.core/= y 1)) 0 1))]
+    (emap (partial with-bool-args logical-nand) a b)))
 
 (defn ∼ [a]
   (letfn [(negate [x]
