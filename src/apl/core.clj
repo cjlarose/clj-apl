@@ -12,7 +12,7 @@
   (cond
     (clojure.core/= x 1) true
     (clojure.core/= x 0) false
-    :else   (throw (ArithmeticException. "Domain error"))))
+    :else (throw (ArithmeticException. "Domain error"))))
 
 ;; comparison functions
 (def < (partial emap (comp bool->int clojure.core/<)))
@@ -30,14 +30,7 @@
 (def ∧ (partial emap (with-bool-args (fn [x y] (and x y)))))
 (def ⍱ (partial emap (with-bool-args (fn [x y] (not (or x y))))))
 (def ⍲ (partial emap (with-bool-args (fn [x y] (not (and x y))))))
-
-(defn ∼ [a]
-  (letfn [(negate [x]
-            (cond
-              (clojure.core/= x 0) 1
-              (clojure.core/= x 1) 0
-              :else (throw (ArithmeticException. "Domain error"))))]
-    (emap negate a)))
+(def ∼ (partial emap (with-bool-args not)))
 
 ;; arithmetic functions
 (defn ⋆
