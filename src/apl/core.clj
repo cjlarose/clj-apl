@@ -100,10 +100,9 @@
 
 (defn ↓ [limit xs]
   ; TODO: Rank error if input is more than one dimension
-  (case (signum limit)
-    -1.0 (vec (drop-last (- limit) xs))
-    1.0  (vec (drop limit xs))
-    0.0  xs))
+  (if (clojure.core/< limit 0)
+    (vec (drop-last (- limit) xs))
+    (vec (drop limit xs))))
 
 ;; generating vectors
 (defn ⍳ [n]
