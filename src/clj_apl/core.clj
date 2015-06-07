@@ -85,6 +85,7 @@
     0.0  []))
 
 (defn ↓ [limit xs]
+  ; TODO: Rank error if input is more than one dimension
   (case (signum limit)
     -1.0 (vec (drop-last (- limit) xs))
     1.0  (vec (drop limit xs))
