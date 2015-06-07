@@ -1,5 +1,5 @@
 (ns apl.core
-  (:refer-clojure :exclude [= + / >])
+  (:refer-clojure :exclude [= + / < >])
   (:require [clojure.core.matrix
               :refer [abs ceil exp log signum pow emap eseq ecount scalar? shape]]
             [clojure.core.matrix.operators :as m]))
@@ -9,6 +9,8 @@
   (if x 1 0))
 
 ;; comparison functions
+(def < (partial emap (comp bool->int clojure.core/<)))
+(def ≤ (partial emap (comp bool->int <=)))
 (def = (partial emap (comp bool->int clojure.core/=)))
 (def ≥ (partial emap (comp bool->int >=)))
 (def > (partial emap (comp bool->int clojure.core/>)))
