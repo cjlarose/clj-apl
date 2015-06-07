@@ -8,6 +8,12 @@
 (defn- bool->int [x]
   (if x 1 0))
 
+(defn- int->bool [x]
+  (cond
+    (clojure.core/= x 1) true
+    (clojure.core/= x 0) false
+    :else   (throw (ArithmeticException. "Domain error"))))
+
 ;; comparison functions
 (def < (partial emap (comp bool->int clojure.core/<)))
 (def ≤ (partial emap (comp bool->int <=)))
@@ -16,30 +22,14 @@
 (def > (partial emap (comp bool->int clojure.core/>)))
 
 ;; logical functions
-(defn- with-bool-args [f & args]
-  (if (every? #{0 1} args)
-    (apply f args)
-    (throw (ArithmeticException. "Domain error"))))
+(defn- with-bool-args [f]
+  (fn [& args]
+    (bool->int (apply f (map int->bool args)))))
 
-(defn ∨ [a b]
-  (letfn [(logical-or [x y]
-            (if (and (clojure.core/= x 0) (clojure.core/= y 0)) 0 1))]
-    (emap (partial with-bool-args logical-or) a b)))
-
-(defn ∧ [a b]
-  (letfn [(logical-and [x y]
-            (if (and (clojure.core/= x 1) (clojure.core/= y 1)) 1 0))]
-    (emap (partial with-bool-args logical-and) a b)))
-
-(defn ⍱ [a b]
-  (letfn [(logical-nor [x y]
-            (if (and (clojure.core/= x 0) (clojure.core/= y 0)) 1 0))]
-    (emap (partial with-bool-args logical-nor) a b)))
-
-(defn ⍲ [a b]
-  (letfn [(logical-nand [x y]
-            (if (and (clojure.core/= x 1) (clojure.core/= y 1)) 0 1))]
-    (emap (partial with-bool-args logical-nand) a b)))
+(def ∨ (partial emap (with-bool-args (fn [x y] (or x y)))))
+(def ∧ (partial emap (with-bool-args (fn [x y] (and x y)))))
+(def ⍱ (partial emap (with-bool-args (fn [x y] (not (or x y))))))
+(def ⍲ (partial emap (with-bool-args (fn [x y] (not (and x y))))))
 
 (defn ∼ [a]
   (letfn [(negate [x]
