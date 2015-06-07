@@ -14,12 +14,14 @@
   (is (= 0.5 (apl/÷ 2.0)))
   (is (= 0.25 (apl/÷ 4.0)))
   (is (= 0.125 (apl/÷ 8.0)))
-  (is (= [0.5 0.25 0.125] (apl/÷ [2.0 4.0 8.0]))))
+  (is (= [0.5 0.25 0.125] (apl/÷ [2.0 4.0 8.0])))
+  (is (= [[0.5 0.25] [0.125 0.5]] (apl/÷ [[2.0 4.0] [8.0 2.0]]))))
 
 (deftest negation
   (is (= 1 (apl/∼ 0)))
   (is (= 0 (apl/∼ 1)))
   (is (= [1 0 1 0 0] (apl/∼ [0 1 0 1 1])))
+  (is (= [[1 0] [1 1] [0 1]] (apl/∼ [[0 1] [0 0] [1 0]])))
   (is (thrown-with-msg? ArithmeticException #"Domain error" (apl/∼ 5)))
   (is (thrown-with-msg? ArithmeticException #"Domain error" (apl/∼ -1))))
 
