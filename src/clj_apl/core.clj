@@ -75,10 +75,13 @@
     ; TODO: Case for empty dimensions vector
     (let [elements (if (clojure.core/= (ecount xs) 0)
                      (repeat 0)
-                     (cycle (eseq xs)))]
-      (if (nil? ds)
-        (vec (take d elements))
-        (vec (take d (map (partial ⍴ ds) (partition (apply clojure.core/* ds) elements))))))))
+                     (cycle (eseq xs)))
+          contents (if (nil? ds)
+                     elements
+                     (map
+                       (partial ⍴ ds)
+                       (partition (apply * ds) elements)))]
+      (vec (take d contents)))))
 
 (defn ↑ [limit xs]
   ; TODO: Rank error if input is more than one dimension
