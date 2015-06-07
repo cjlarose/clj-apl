@@ -16,25 +16,20 @@
 (def > (partial emap (comp bool->int clojure.core/>)))
 
 ;; logical functions
+(defn- with-bool-args [f & args]
+  (if (every? #{0 1} args)
+    (apply f args)
+    (throw (ArithmeticException. "Domain error"))))
+
 (defn ∧ [a b]
   (letfn [(logical-and [x y]
-            (cond
-              (and (clojure.core/= x 0) (clojure.core/= y 0)) 0
-              (and (clojure.core/= x 0) (clojure.core/= y 1)) 0
-              (and (clojure.core/= x 1) (clojure.core/= y 0)) 0
-              (and (clojure.core/= x 1) (clojure.core/= y 1)) 1
-              :else (throw (ArithmeticException. "Domain error"))))]
-    (emap logical-and a b)))
+            (if (and (clojure.core/= x 1) (clojure.core/= y 1)) 1 0))]
+    (emap (partial with-bool-args logical-and) a b)))
 
 (defn ∨ [a b]
   (letfn [(logical-or [x y]
-            (cond
-              (and (clojure.core/= x 0) (clojure.core/= y 0)) 0
-              (and (clojure.core/= x 0) (clojure.core/= y 1)) 1
-              (and (clojure.core/= x 1) (clojure.core/= y 0)) 1
-              (and (clojure.core/= x 1) (clojure.core/= y 1)) 1
-              :else (throw (ArithmeticException. "Domain error"))))]
-    (emap logical-or a b)))
+            (if (and (clojure.core/= x 0) (clojure.core/= y 0)) 0 1))]
+    (emap (partial with-bool-args logical-or) a b)))
 
 (defn ∼ [a]
   (letfn [(negate [x]
