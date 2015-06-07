@@ -1,7 +1,7 @@
 (ns apl.core
   (:refer-clojure :exclude [= + / < >])
   (:require [clojure.core.matrix
-              :refer [abs ceil exp log signum pow emap eseq ecount scalar? shape]]
+              :refer [abs ceil exp log signum pow emap eseq ecount scalar? shape array]]
             [clojure.core.matrix.operators :as m]))
 
 ;; utility
@@ -77,28 +77,28 @@
                      (map
                        (partial ⍴ ds)
                        (partition (apply * ds) elements)))]
-      (vec (take d contents)))))
+      (array (take d contents)))))
 
 (defn ↑ [limit xs]
   ; TODO: Rank error if input is more than one dimension
   (if (clojure.core/< limit 0)
-    (vec (take-last
+    (array (take-last
            (- limit)
            (concat
              (take (- (- limit) (count xs)) (repeat 0))
              xs)))
-    (vec (take limit (concat xs (repeat 0))))))
+    (array (take limit (concat xs (repeat 0))))))
 
 (defn ↓ [limit xs]
   ; TODO: Rank error if input is more than one dimension
   (if (clojure.core/< limit 0)
-    (vec (drop-last (- limit) xs))
-    (vec (drop limit xs))))
+    (array (drop-last (- limit) xs))
+    (array (drop limit xs))))
 
 ;; generating vectors
 (defn ⍳ [n]
   (if (>= n 0)
-    (vec (range 1 (inc n)))
+    (array (range 1 (inc n)))
     (throw (ArithmeticException. "Domain error"))))
 
 ;; operators
