@@ -4,12 +4,16 @@
               :refer [abs ceil exp log signum pow emap eseq ecount scalar? shape]]
             [clojure.core.matrix.operators :as m]))
 
-;; comparison
+;; utility
+(defn- bool->int [x]
+  (if x 1 0))
+
+;; comparison functions
 (defn = [a b]
-  (if (clojure.core/= a b) 1 0))
+  (emap (comp bool->int clojure.core/=) a b))
 
 (defn ≥ [a b]
-  (if (>= a b) 1 0))
+  (emap (comp bool->int >=) a b))
 
 ;; logical functions
 (defn ∧ [a b]
