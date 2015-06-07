@@ -28,10 +28,12 @@
     :else (throw (ArithmeticException. "Domain error"))))
 
 (defn ∼ [a]
-  (cond
-    (clojure.core/= a 0) 1
-    (clojure.core/= a 1) 0
-    :else (throw (ArithmeticException. "Domain error"))))
+  (letfn [(negate [x]
+            (cond
+              (clojure.core/= x 0) 1
+              (clojure.core/= x 1) 0
+              :else (throw (ArithmeticException. "Domain error"))))]
+    (emap negate a)))
 
 ;; arithmetic functions
 (defn ⋆

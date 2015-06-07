@@ -18,6 +18,7 @@
   (testing "not"
     (is (= 1 (apl/∼ 0)))
     (is (= 0 (apl/∼ 1)))
+    (is (= [1 0 1 0 0] (apl/∼ [0 1 0 1 1])))
     (is (thrown-with-msg? ArithmeticException #"Domain error" (apl/∼ 5)))
     (is (thrown-with-msg? ArithmeticException #"Domain error" (apl/∼ -1))))
   (testing "powers of euler's constant"
