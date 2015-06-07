@@ -74,10 +74,16 @@
        (vec (take n (map vec (partition m (cycle xs)))))))))
 
 (defn ↑ [limit xs]
-  (case (signum limit)
-    -1.0 (vec (take-last (- limit) xs))
-    1.0  (vec (take limit xs))
-    0.0  []))
+  (letfn [(pad-right [ys] (concat ys (repeat 0)))]
+    ; TODO: Rank error if input is more than one dimension
+    (case (signum limit)
+      -1.0 (vec (take-last
+                  (- limit)
+                  (concat
+                    (take (- (- limit) (count xs)) (repeat 0))
+                    xs)))
+      1.0  (vec (take limit (pad-right xs)))
+      0.0  [])))
 
 (defn ↓ [limit xs]
   (case (signum limit)
