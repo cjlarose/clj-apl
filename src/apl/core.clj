@@ -89,14 +89,13 @@
 
 (defn ↑ [limit xs]
   ; TODO: Rank error if input is more than one dimension
-  (case (signum limit)
-    -1.0 (vec (take-last
-                (- limit)
-                (concat
-                  (take (- (- limit) (count xs)) (repeat 0))
-                  xs)))
-    1.0  (vec (take limit (concat xs (repeat 0))))
-    0.0  []))
+  (if (clojure.core/< limit 0)
+    (vec (take-last
+           (- limit)
+           (concat
+             (take (- (- limit) (count xs)) (repeat 0))
+             xs)))
+    (vec (take limit (concat xs (repeat 0))))))
 
 (defn ↓ [limit xs]
   ; TODO: Rank error if input is more than one dimension
