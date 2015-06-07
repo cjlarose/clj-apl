@@ -78,7 +78,7 @@
                      (cycle (eseq xs)))]
       (if (nil? ds)
         (vec (take d elements))
-        (vec (take d (partition (first ds) elements)))))))
+        (vec (take d (map (partial ⍴ ds) (partition (apply clojure.core/* ds) elements))))))))
 
 (defn ↑ [limit xs]
   ; TODO: Rank error if input is more than one dimension
