@@ -17,20 +17,24 @@
 
 ;; logical functions
 (defn ∧ [a b]
-  (cond
-    (and (clojure.core/= a 0) (clojure.core/= b 0)) 0
-    (and (clojure.core/= a 0) (clojure.core/= b 1)) 0
-    (and (clojure.core/= a 1) (clojure.core/= b 0)) 0
-    (and (clojure.core/= a 1) (clojure.core/= b 1)) 1
-    :else (throw (ArithmeticException. "Domain error"))))
+  (letfn [(logical-and [x y]
+            (cond
+              (and (clojure.core/= x 0) (clojure.core/= y 0)) 0
+              (and (clojure.core/= x 0) (clojure.core/= y 1)) 0
+              (and (clojure.core/= x 1) (clojure.core/= y 0)) 0
+              (and (clojure.core/= x 1) (clojure.core/= y 1)) 1
+              :else (throw (ArithmeticException. "Domain error"))))]
+    (emap logical-and a b)))
 
 (defn ∨ [a b]
-  (cond
-    (and (clojure.core/= a 0) (clojure.core/= b 0)) 0
-    (and (clojure.core/= a 0) (clojure.core/= b 1)) 1
-    (and (clojure.core/= a 1) (clojure.core/= b 0)) 1
-    (and (clojure.core/= a 1) (clojure.core/= b 1)) 1
-    :else (throw (ArithmeticException. "Domain error"))))
+  (letfn [(logical-or [x y]
+            (cond
+              (and (clojure.core/= x 0) (clojure.core/= y 0)) 0
+              (and (clojure.core/= x 0) (clojure.core/= y 1)) 1
+              (and (clojure.core/= x 1) (clojure.core/= y 0)) 1
+              (and (clojure.core/= x 1) (clojure.core/= y 1)) 1
+              :else (throw (ArithmeticException. "Domain error"))))]
+    (emap logical-or a b)))
 
 (defn ∼ [a]
   (letfn [(negate [x]

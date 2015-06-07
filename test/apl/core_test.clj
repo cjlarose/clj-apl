@@ -145,6 +145,9 @@
   (is (= 0 (apl/∧ 0 1)))
   (is (= 0 (apl/∧ 1 0)))
   (is (= 1 (apl/∧ 1 1)))
+  (is (= [0 1] (apl/∧ 1 [0 1])))
+  (is (= [0 0] (apl/∧ 0 [0 1])))
+  (is (= [0 0 0 1] (apl/∧ [0 0 1 1] [0 1 0 1])))
   (is (thrown-with-msg? ArithmeticException #"Domain error" (apl/∧ 1 -1)))
   (is (thrown-with-msg? ArithmeticException #"Domain error" (apl/∧ -1 0))))
 
@@ -153,6 +156,9 @@
   (is (= 1 (apl/∨ 0 1)))
   (is (= 1 (apl/∨ 1 0)))
   (is (= 1 (apl/∨ 1 1)))
+  (is (= [1 1] (apl/∨ 1 [0 1])))
+  (is (= [0 1] (apl/∨ 0 [0 1])))
+  (is (= [0 1 1 1] (apl/∨ [0 0 1 1] [0 1 0 1])))
   (is (thrown-with-msg? ArithmeticException #"Domain error" (apl/∨ 1 -1)))
   (is (thrown-with-msg? ArithmeticException #"Domain error" (apl/∨ -5 0))))
 
