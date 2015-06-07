@@ -201,8 +201,8 @@
   (is (float= 3.0 (apl/⍟ 2.0 8.0)))
   (is (float= 4.0 (apl/⍟ 2.0 16.0)))
   (is (float= 3.0 (apl/⍟ 3.0 27.0)))
-  (is (every? true? (map float= [1.0 2.0 3.0 4.0] (apl/⋆ 2.0 [2.0 4.0 8.0 16.0]))))
-  (is (every? true? (map float= [1.0 2.0 3.0] (apl/⋆ [2.0 3.0 4.0] [2.0 9.0 64.0]))))
+  (is (every? true? (map float= [1.0 2.0 3.0 4.0] (apl/⍟ 2.0 [2.0 4.0 8.0 16.0]))))
+  (is (every? true? (map float= [1.0 2.0 3.0] (apl/⍟ [2.0 3.0 4.0] [2.0 9.0 64.0]))))
   (testing "returns 0.0 for undefined results"
     (is (= 0.0 (apl/⍟ 2.0 -1.0)))))
 
