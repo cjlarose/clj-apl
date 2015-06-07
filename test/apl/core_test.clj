@@ -36,7 +36,9 @@
   (is (= 0.0 (apl/⍟ 1.0)))
   (is (float= 2.0149030205422647 (apl/⍟ 7.5)))
   (is (= 1.0 (apl/⍟ Math/E)))
-  (is (= [0.0 1.0 1.0 0.0] (apl/⍟ [1.0 Math/E Math/E 1.0]))))
+  (is (= [0.0 1.0 1.0 0.0] (apl/⍟ [1.0 Math/E Math/E 1.0])))
+  (testing "returns 0.0 for undefined results"
+    (is (= 0.0 (apl/⍟ -1.0)))))
 
 (deftest signum
   (is (= 1.0 (apl/× 1.0)))
