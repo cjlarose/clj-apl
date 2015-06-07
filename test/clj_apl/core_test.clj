@@ -25,11 +25,13 @@
     (is (= 1.0 (apl/⋆ 0.0)))
     (is (= Math/E (apl/⋆ 1.0)))
     (is (float= 0.36787944117144233 (apl/⋆ -1.0)))
-    (is (float= 735.0951892419727 (apl/⋆ 6.6))))
+    (is (float= 735.0951892419727 (apl/⋆ 6.6)))
+    (is (= [1.0 Math/E Math/E 1.0] (apl/⋆ [0.0 1.0 1.0 0.0]))))
   (testing "natural log"
     (is (= 0.0 (apl/⍟ 1.0)))
     (is (float= 2.0149030205422647 (apl/⍟ 7.5)))
-    (is (= 1.0 (apl/⍟ Math/E))))
+    (is (= 1.0 (apl/⍟ Math/E)))
+    (is (= [0.0 1.0 1.0 0.0] (apl/⍟ [1.0 Math/E Math/E 1.0]))))
   (testing "sign function"
     (is (= 1.0 (apl/× 1.0)))
     (is (= 1.0 (apl/× 234.4)))
