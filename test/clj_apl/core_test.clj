@@ -117,6 +117,13 @@
   (is (float= 3.0 (apl/⋆ 3.0 1.0)))
   (is (float= 0.125 (apl/⋆ 2.0 -3.0))))
 
+(deftest logarithms
+  (is (= 0.0 (apl/⍟ Math/E 1.0)))
+  (is (= 1.0 (apl/⍟ Math/E Math/E)))
+  (is (float= 3.0 (apl/⍟ 2.0 8.0)))
+  (is (float= 4.0 (apl/⍟ 2.0 16.0)))
+  (is (float= 3.0 (apl/⍟ 3.0 27.0))))
+
 (deftest addition
   (is (float= 4.0 (apl/+ 2.0 2.0)))
   (is (float= 5.0 (apl/+ 2.0 3.0)))
