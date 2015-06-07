@@ -189,38 +189,54 @@
   (is (float= 8.0 (apl/⋆ 2.0 3.0)))
   (is (float= 9.0 (apl/⋆ 3.0 2.0)))
   (is (float= 3.0 (apl/⋆ 3.0 1.0)))
-  (is (float= 0.125 (apl/⋆ 2.0 -3.0))))
+  (is (float= 0.125 (apl/⋆ 2.0 -3.0)))
+  (is (every? true? (map float= [4.0 8.0 0.125] (apl/⋆ 2.0 [2.0 3.0 -3.0]))))
+  (is (every? true? (map float= [4.0 8.0 9.0 3.0 0.125] (apl/⋆ [2.0 2.0 3.0 3.0 2.0] [2.0 3.0 2.0 1.0 -3.0])))))
 
 (deftest logarithms
   (is (= 0.0 (apl/⍟ Math/E 1.0)))
   (is (= 1.0 (apl/⍟ Math/E Math/E)))
+  (is (float= 1.0 (apl/⍟ 2.0 2.0)))
+  (is (float= 2.0 (apl/⍟ 2.0 4.0)))
   (is (float= 3.0 (apl/⍟ 2.0 8.0)))
   (is (float= 4.0 (apl/⍟ 2.0 16.0)))
-  (is (float= 3.0 (apl/⍟ 3.0 27.0))))
+  (is (float= 3.0 (apl/⍟ 3.0 27.0)))
+  (is (every? true? (map float= [1.0 2.0 3.0 4.0] (apl/⋆ 2.0 [2.0 4.0 8.0 16.0]))))
+  (is (every? true? (map float= [1.0 2.0 3.0] (apl/⋆ [2.0 3.0 4.0] [2.0 9.0 64.0]))))
+  (testing "returns 0.0 for undefined results"
+    (is (= 0.0 (apl/⍟ 2.0 -1.0)))))
 
 (deftest addition
   (is (float= 4.0 (apl/+ 2.0 2.0)))
   (is (float= 5.0 (apl/+ 2.0 3.0)))
   (is (float= 10.5 (apl/+ 11.0 -0.5)))
-  (is (float= 11.0 (apl/+ 11.0 0.0))))
+  (is (float= 11.0 (apl/+ 11.0 0.0)))
+  (is (every? true? (map float= [4.0 5.0 10.5 11.0] (apl/+ 4.5 [-0.5 0.5 6.0 6.5]))))
+  (is (every? true? (map float= [7.0 9.0 11.0 13.0 15.0] (apl/+ [1.0 2.0 3.0 4.0 5.0] [6.0 7.0 8.0 9.0 10.0])))))
 
 (deftest multiplication
   (is (float= 4.0 (apl/× 2.0 2.0)))
   (is (float= 6.0 (apl/× 2.0 3.0)))
   (is (float= -5.5 (apl/× 11.0 -0.5)))
-  (is (float= 0.0 (apl/× 11.0 0.0))))
+  (is (float= 0.0 (apl/× 11.0 0.0)))
+  (is (every? true? (map float= [4.0 6.0 8.0 10.0] (apl/× 2.0 [2.0 3.0 4.0 5.0]))))
+  (is (every? true? (map float= [4.0 9.0 16.0] (apl/× [2.0 3.0 4.0] [2.0 3.0 4.0])))))
 
 (deftest division
   (is (float= 2.0 (apl/÷ 4.0 2.0)))
   (is (float= 2.0 (apl/÷ 6.0 3.0)))
   (is (float= 11.0 (apl/÷ -5.5 -0.5)))
-  (is (float= 11.0 (apl/÷ 11.0 1.0))))
+  (is (float= 11.0 (apl/÷ 11.0 1.0)))
+  (is (every? true? (map float= [1.0 2.0 3.0 4.0] (apl/÷ 12.0 [12 6 4 3]))))
+  (is (every? true? (map float= [1.0 3.0 2.0 3.0] (apl/÷ [12.0 18.0 8.0 9.0] [12 6 4 3])))))
 
 (deftest maximum
   (is (= 2.0 (apl/⌈ 2.0 1.0)))
   (is (= 2.0 (apl/⌈ 2.0 2.0)))
   (is (= 2.0 (apl/⌈ 2.0 -3.0)))
-  (is (= -3.0 (apl/⌈ -7.0 -3.0))))
+  (is (= -3.0 (apl/⌈ -7.0 -3.0)))
+  (is (= [0.0 0.0 0.0 1.0 2.0] (apl/⌈ 0.0 [-2.0 -1.0 0.0 1.0 2.0])))
+  (is (= [2.0 1.0 0.0 1.0 2.0] (apl/⌈ [2.0 1.0 0.0 -1.0 -2.0] [-2.0 -1.0 0.0 1.0 2.0]))))
 
 (deftest take-vector
   (is (= [] (apl/↑ 0 [1 2 3 4 5])))
