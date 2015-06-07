@@ -1,4 +1,4 @@
-(ns clj-apl.core
+(ns apl.core
   (:refer-clojure :exclude [= + /])
   (:require [clojure.core.matrix
               :refer [abs ceil exp log signum pow emap eseq ecount scalar? shape]]

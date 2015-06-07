@@ -1,3 +1,3 @@
-# Introduction to clj-apl
+# Introduction to apl
 
 TODO: write [great documentation](http://jacobian.org/writing/what-to-write/)

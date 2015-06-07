@@ -1,6 +1,6 @@
-(ns clj-apl.core-test
+(ns apl.core-test
   (:require [clojure.test :refer :all]
-            [clj-apl.core :as apl]))
+            [apl.core :as apl]))
 
 (defn float=
   "http://gettingclojure.wikidot.com/cookbook:numbers"
