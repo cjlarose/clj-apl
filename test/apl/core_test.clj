@@ -15,7 +15,8 @@
   (is (= 0.25 (apl/÷ 4.0)))
   (is (= 0.125 (apl/÷ 8.0)))
   (is (= [0.5 0.25 0.125] (apl/÷ [2.0 4.0 8.0])))
-  (is (= [[0.5 0.25] [0.125 0.5]] (apl/÷ [[2.0 4.0] [8.0 2.0]]))))
+  (is (= [[0.5 0.25] [0.125 0.5]] (apl/÷ [[2.0 4.0] [8.0 2.0]])))
+  (is (thrown-with-msg? ArithmeticException #"Domain error" (apl/÷ 0))))
 
 (deftest negation
   (is (= 1 (apl/∼ 0)))
@@ -37,8 +38,8 @@
   (is (float= 2.0149030205422647 (apl/⍟ 7.5)))
   (is (= 1.0 (apl/⍟ Math/E)))
   (is (= [0.0 1.0 1.0 0.0] (apl/⍟ [1.0 Math/E Math/E 1.0])))
-  (testing "returns 0.0 for undefined results"
-    (is (= 0.0 (apl/⍟ -1.0)))))
+  (is (= 0.0 (apl/⍟ -1.0)))
+  (is (thrown-with-msg? ArithmeticException #"Domain error" (apl/⍟ 0.0))))
 
 (deftest signum
   (is (= 1.0 (apl/× 1.0)))
@@ -190,14 +191,13 @@
   (is (float= 4.0 (apl/⋆ 2.0 2.0)))
   (is (float= 8.0 (apl/⋆ 2.0 3.0)))
   (is (float= 9.0 (apl/⋆ 3.0 2.0)))
+  (is (float= 1.0 (apl/⋆ 3.0 0.0)))
   (is (float= 3.0 (apl/⋆ 3.0 1.0)))
   (is (float= 0.125 (apl/⋆ 2.0 -3.0)))
   (is (every? true? (map float= [4.0 8.0 0.125] (apl/⋆ 2.0 [2.0 3.0 -3.0]))))
   (is (every? true? (map float= [4.0 8.0 9.0 3.0 0.125] (apl/⋆ [2.0 2.0 3.0 3.0 2.0] [2.0 3.0 2.0 1.0 -3.0])))))
 
 (deftest logarithms
-  (is (= 0.0 (apl/⍟ Math/E 1.0)))
-  (is (= 1.0 (apl/⍟ Math/E Math/E)))
   (is (float= 1.0 (apl/⍟ 2.0 2.0)))
   (is (float= 2.0 (apl/⍟ 2.0 4.0)))
   (is (float= 3.0 (apl/⍟ 2.0 8.0)))
@@ -205,8 +205,25 @@
   (is (float= 3.0 (apl/⍟ 3.0 27.0)))
   (is (every? true? (map float= [1.0 2.0 3.0 4.0] (apl/⍟ 2.0 [2.0 4.0 8.0 16.0]))))
   (is (every? true? (map float= [1.0 2.0 3.0] (apl/⍟ [2.0 3.0 4.0] [2.0 9.0 64.0]))))
+  (testing "log base zero"
+    (is (float= 0.0 (apl/⍟ 0.0 1.0)))
+    (is (float= 0.0 (apl/⍟ 0.0 25.2)))
+    (is (float= 0.0 (apl/⍟ 0.0 0.0))))
+  (testing "log base one"
+    (is (float= 1.0 (apl/⍟ 1.0 1.0)))
+    (is (thrown-with-msg? ArithmeticException #"Domain error" (apl/⍟ 1.0 25.2)))
+    (is (thrown-with-msg? ArithmeticException #"Domain error" (apl/⍟ 1.0 0.0))))
+  (testing "log base e"
+    (is (float= 0.0 (apl/⍟ Math/E -1.0)))
+    (is (float= 0.0 (apl/⍟ Math/E 0.0)))
+    (is (float= 0.0 (apl/⍟ Math/E 1.0)))
+    (is (float= 1.0 (apl/⍟ Math/E Math/E)))
+    (is (float= 3.226843995 (apl/⍟ Math/E 25.2))))
   (testing "returns 0.0 for undefined results"
-    (is (= 0.0 (apl/⍟ 2.0 -1.0)))))
+    (is (float= 0.0 (apl/⍟ 2.0 -1.0))))
+  (testing "returns negative infinity"
+    (is (= Double/NEGATIVE_INFINITY (apl/⍟ 2.0 0.0)))
+    (is (= Double/NEGATIVE_INFINITY (apl/⍟ 8.0 0.0)))))
 
 (deftest addition
   (is (float= 4.0 (apl/+ 2.0 2.0)))
@@ -230,7 +247,8 @@
   (is (float= 11.0 (apl/÷ -5.5 -0.5)))
   (is (float= 11.0 (apl/÷ 11.0 1.0)))
   (is (every? true? (map float= [1.0 2.0 3.0 4.0] (apl/÷ 12.0 [12 6 4 3]))))
-  (is (every? true? (map float= [1.0 3.0 2.0 3.0] (apl/÷ [12.0 18.0 8.0 9.0] [12 6 4 3])))))
+  (is (every? true? (map float= [1.0 3.0 2.0 3.0] (apl/÷ [12.0 18.0 8.0 9.0] [12 6 4 3]))))
+  (is (thrown-with-msg? ArithmeticException #"Domain error" (apl/÷ 1 0))))
 
 (deftest maximum
   (is (= 2.0 (apl/⌈ 2.0 1.0)))
